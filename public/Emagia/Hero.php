@@ -4,11 +4,6 @@ namespace Emagia;
 
 class Hero extends AbstractEntity
 {    
-
-    private function RapidStrike(){}
-
-    private function MagicShield(){}
-
     public function __construct($name)
     {
         $health = rand (70,100);
