@@ -6,7 +6,10 @@ RUN apk add -U --no-cache autoconf \
     zip \
     curl \
     libressl \
-    openssl
+    openssl \ 
+    composer
 
-RUN apk add --no-cache php7-pear php7-dev gcc musl-dev make \
+RUN apk add --no-cache php7-pear php7-xml php7-mbstring php7-dev php7-dom php7-xmlreader php7-xmlwriter php7-tokenizer gcc musl-dev make \
     && pecl install xdebug
+
+WORKDIR "/var/www/html"

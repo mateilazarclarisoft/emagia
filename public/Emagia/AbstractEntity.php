@@ -1,5 +1,7 @@
 <?php
 
+namespace Emagia;
+
 abstract class AbstractEntity implements Entity{
     private $name;
     private $health;
@@ -26,10 +28,23 @@ abstract class AbstractEntity implements Entity{
     }
 
     public function Attack(Entity $entity){
-        $entity->SetDamage( $this->GetStrength() - $entity->GetDefence() );
+        $entity->Defend( $this->GetStrength() - $entity->GetDefence() );
     }
 
-    public abstract function Defend();
+    public function Defend($damage){
+        if ($this->IsLucky()){
+            $damage = $this->LuckyDamage($damage);            
+        }
+        $this->health -= $damage;
+        if ($this->health < 0){
+            $this->health = 0;
+        }
+    }
+
+    protected function LuckyDamage($damage){
+        echo "{$this->GetName()} lucky defensive \n";
+        return (int)$damage/2;
+    }
 
     public function GetName(){
         return $this->name;
@@ -51,14 +66,19 @@ abstract class AbstractEntity implements Entity{
         return $this->luck;
     }
 
+    public function GetHealth(){
+        return $this->health;
+    }
+
     public function IsAlive(){
         return $this->health>0;
     }
 
-    public function SetDamage($damage){
-        $this->health -= $damage;
-        if ($this->health < 0){
-            $this->health = 0;
-        }
+    private function IsLucky()
+    {
+        $luckFactor = random_int(1,100);
+        return $luckFactor < $this->luck ;
     }
+
+    
 }

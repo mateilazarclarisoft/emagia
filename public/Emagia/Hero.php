@@ -1,5 +1,7 @@
 <?php
 
+namespace Emagia;
+
 class Hero extends AbstractEntity
 {    
 
@@ -25,7 +27,20 @@ class Hero extends AbstractEntity
         );
     }
 
-    public function Defend(){
+    protected function LuckyDamage($damage){
+        echo "{$this->GetName()} uses magic shield \n";
+        return 0;
+    }
 
+    public function Attack(Entity $entity)
+    {
+        parent::Attack($entity);
+
+        $luckFactor = random_int(1,100);
+        if ($luckFactor < 10)
+        {
+            echo "{$this->GetName()} uses rapid strike \n";
+            parent::Attack($entity);
+        }
     }
 }

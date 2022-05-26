@@ -1,5 +1,7 @@
 <?php
 
+namespace Emagia;
+
 class WildBeast extends AbstractEntity
 {
     public function __construct($name)
@@ -19,8 +21,4 @@ class WildBeast extends AbstractEntity
             $luck
         );
     }   
-
-    public function Defend(){
-
-    }
 }

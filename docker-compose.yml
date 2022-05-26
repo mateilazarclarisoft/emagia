@@ -15,43 +15,8 @@ services:
     ports:
       - ${DOCKER_APP_PORT:-80}:80
     networks:
-      - unotifi
-    depends_on:
-      - db
+      - emagia
 
-  db:
-    image: mysql:5.6
-    environment:
-      MYSQL_USER: "${MYSQL_USER:?err}"
-      MYSQL_PASSWORD: "${MYSQL_USER_PASSWORD:?err}"
-      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:?err}"
-      MYSQL_DATABASE: "${MYSQL_DATABASE:?err}"
-    volumes:
-      - ./docker/src/db/:/docker-entrypoint-initdb.d
-      - mysql-data:/var/lib/mysql
-    ports:
-      - ${DOCKER_MYSQL_PORT:-3306}:3306
-    networks:
-      - unotifi
-
-  db-test:
-    image: mysql:5.6
-    environment:
-      MYSQL_USER: "${MYSQL_USER:?err}"
-      MYSQL_PASSWORD: "${MYSQL_USER_PASSWORD:?err}"
-      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:?err}"
-      MYSQL_DATABASE: "unotifi_com_dealership_test"
-    volumes:
-      - ./docker/src/db/:/docker-entrypoint-initdb.d
-      - mysql-data-test:/var/lib/mysql
-    ports:
-      - ${DOCKER_MYSQL_TEST_PORT:-3307}:3306
-    networks:
-      - unotifi
 
 networks:
-  unotifi:
-
-volumes:
-  mysql-data:
-  mysql-data-test:
+  emagia:

@@ -1,16 +1,11 @@
 <?php
 
+namespace Emagia;
+
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
 
-spl_autoload_register(function ($className) {
-    $file = "public/" . str_replace('\\', DIRECTORY_SEPARATOR, $className) . '.php';
-    if (file_exists($file)) {
-        require $file;
-        return true;
-    }
-    return false;
-});
+require_once "autoloader.php";
 
 class Game
 {
@@ -23,16 +18,27 @@ class Game
         $attacker = self::GetAttacker($ordeus, $wildBeast);
         $defender = ($attacker instanceof Hero) ? $wildBeast : $ordeus;
 
-        while ($attacker->isAlive() && $defender->isAlive()) {
+        $roundNo = 1;
+        while ($attacker->IsAlive() && $defender->IsAlive()) {
+            echo "\n";
+            echo "Round {$roundNo} \n";
+            echo "{$attacker->GetName()} is attacking {$defender->GetName()} \n";
+            
             $attacker->Attack($defender);
+
+            echo "{$attacker->GetName()} Health: {$attacker->GetHealth()}\n";
+            echo "{$defender->GetName()} Health: {$defender->GetHealth()}\n";
+
             $nextDefender = $attacker;
             $attacker = $defender;
             $defender = $nextDefender;
 
             unset($nextDefender);
+            $roundNo++;
         }
 
-        echo "{$attacker->GetName()} has won the fight\n";
+        echo "\n";
+        echo "{$defender->GetName()} has won the fight\n";
     }
 
     private static function GetAttacker($ordeus, $wildBeast)
