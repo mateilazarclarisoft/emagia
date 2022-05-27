@@ -37,4 +37,5 @@ __php Game.php__
 
 For tests
 
+__composer install__
 __vendor/bin/phpunit tests__
